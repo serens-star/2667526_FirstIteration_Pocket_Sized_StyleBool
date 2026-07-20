@@ -1,0 +1,34 @@
+.hero-title {
+  font-family: "Caveat", cursive;
+  font-size: 3rem;
+  line-height: 1.05;
+  margin: 6px 0 4px;
+  color: var(--navy);
+}
+
+.hero-sub {
+  font-size: 1.02rem;
+  color: #4a557f;
+  margin: 0 0 20px;
+  max-width: 46ch;
+}
+
+.badge-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.badge {
+  background: var(--denim-3);
+  border: 1.5px solid var(--denim-1);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

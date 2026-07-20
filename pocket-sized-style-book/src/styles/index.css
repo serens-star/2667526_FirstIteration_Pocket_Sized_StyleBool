@@ -1,0 +1,50 @@
+:root {
+  --denim-1: #7b93b8;
+  --denim-2: #c3d3e8;
+  --denim-3: #eef3f9;
+  --navy: #26305a;
+  --lavender: #a9a4e0;
+  --blush: #f3b9cb;
+  --cream: #fbf8f2;
+  --gold: #f0cf6f;
+  --teal: #3f7d84;
+  --ok: #5c9a6f;
+  --err: #c9636b;
+
+  --radius-lg: 24px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  color: var(--navy);
+  background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.5), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.35), transparent 45%),
+    repeating-linear-gradient(115deg, var(--denim-1) 0px, var(--denim-1) 2px, var(--denim-2) 2px, var(--denim-2) 4px);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px 64px;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-family: inherit;
+}
