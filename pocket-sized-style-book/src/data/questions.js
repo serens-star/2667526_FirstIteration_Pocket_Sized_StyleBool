@@ -99,10 +99,7 @@ export const QUESTIONS = [
   ]}
 ];
 
-// Edge case: if two categories tie for the top quiz score, ask 2
-// forced-choice tiebreaker questions between just those two
-// categories before finalising a result (see PRD "Edge Cases &
-// Fallbacks").
+
 export function tiebreakerQuestions(catA, catB) {
   const label = (c) => CATEGORIES[c].name;
   return [

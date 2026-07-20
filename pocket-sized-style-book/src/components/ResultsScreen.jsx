@@ -5,7 +5,12 @@ import { IconWarning, IconRefresh, IconCheck } from "./icons/Icon.jsx";
 import { STYLE_ICONS } from "../data/styleIcons.js";
 import { SHOP_ITEMS } from "../data/shopItems.js";
 
-export default function ResultsScreen({ profile, usedFallback, categoryCode, onRestart }) {
+export default function ResultsScreen({
+  profile,
+  usedFallback,
+  categoryCode,
+  onRestart,
+}) {
   const icons = STYLE_ICONS[categoryCode] || [];
   const items = SHOP_ITEMS[categoryCode] || [];
 
@@ -23,15 +28,6 @@ export default function ResultsScreen({ profile, usedFallback, categoryCode, onR
             </li>
           ))}
         </ul>
-        {usedFallback && (
-          <div className="fallback-note">
-            <IconWarning size={15} />
-            <span>
-              Generated using the built-in style engine because the live AI
-              call was unavailable. See the note in the report.
-            </span>
-          </div>
-        )}
       </div>
 
       <div className="section-heading">Style icons for you</div>
