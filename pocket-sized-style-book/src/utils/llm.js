@@ -1,5 +1,61 @@
 import { CATEGORIES, NAME_TO_CODE } from "../data/categories.js";
 
+const ENV = import.meta.env ?? process.env;
+
+export function getProvider() {
+  if (ENV.VITE_GEMINI_API_KEY) return "gemini";
+  if (ENV.VITE_ANTHROPIC_API_KEY) return "anthropic";
+  return null;
+}
+export function getModel() {
+  return getProvider() === "anthropic"
+    ? ENV.VITE_ANTHROPIC_MODEL || "claude-sonnet-4-6"
+    : ENV.VITE_GEMINI_MODEL || "gemini-3.5-flash-lite";
+}
+
+async function callModel(systemPrompt, userPrompt) {
+  const provider = getProvider();
+  const model = getModel();
+  if (!provider) throw new Error("No VITE_GEMINI_API_KEY or VITE_ANTHROPIC_API_KEY configured");
+
+  let response;
+  if (provider === "gemini") {
+    response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": ENV.VITE_GEMINI_API_KEY },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
+    
+        generationConfig: { responseMimeType: "application/json", temperature: 0.7, maxOutputTokens: 2048 }
+      })
+    });
+  } else {
+    response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ENV.VITE_ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({ model, max_tokens: 1000, system: systemPrompt, messages: [{ role: "user", content: userPrompt }] })
+    });
+  }
+
+  if (!response.ok) {
+    const body = (await response.text?.().catch(() => "")) || "";
+    throw new Error(`${provider} API error ${response.status} (model: ${model}) ${body.slice(0, 200)}`);
+  }
+  const data = await response.json();
+  const text =
+    provider === "gemini"
+      ? (data.candidates?.[0]?.content?.parts || []).map((p) => p.text || "").join("")
+      : (data.content || []).find((b) => b.type === "text")?.text;
+  if (!text) throw new Error("No text in model response");
+  return text;
+}
+
 export async function generateStyleProfile({ scores, chosenLabels, topCode }) {
   const categoryList = Object.values(CATEGORIES)
     .map((c) => c.name)
@@ -25,31 +81,9 @@ User's actual selected answers in order: ${answersSummary}.
 Generate the style profile JSON now.`;
 
   try {
-    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-    if (!apiKey) throw new Error("No VITE_ANTHROPIC_API_KEY configured");
+    const text = await callModel(systemPrompt, userPrompt);
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true"
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: "user", content: userPrompt }]
-      })
-    });
-
-    if (!response.ok) throw new Error(`API error ${response.status}`);
-    const data = await response.json();
-    const textBlock = (data.content || []).find((b) => b.type === "text");
-    if (!textBlock) throw new Error("No text block in response");
-
-    const cleaned = textBlock.text
+    const cleaned = text
       .trim()
       .replace(/^```json/i, "")
       .replace(/^```/, "")
@@ -67,6 +101,8 @@ Generate the style profile JSON now.`;
 
     return { result: parsed, usedFallback: false };
   } catch (err) {
+    
+    console.warn("[LLM] Using fallback profile:", err.message);
     const catInfo = CATEGORIES[topCode];
     const result = {
       aestheticName: catInfo.name,
