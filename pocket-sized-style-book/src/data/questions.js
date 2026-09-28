@@ -119,3 +119,14 @@ export function tiebreakerQuestions(catA, catB) {
     }
   ];
 }
+
+export function suddenDeathQuestion(catA, catB) {
+  const label = (c) => CATEGORIES[c].name;
+  return {
+    t: `Last one! Which would you grab first: ${label(catA)} or ${label(catB)}?`,
+    o: [
+      [`Something ${label(catA)}`, catA],
+      [`Something ${label(catB)}`, catB]
+    ]
+  };
+}
