@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, UseCallback } from "react";
 import "./styles/App.css";
 import Header from "./components/Header.jsx";
 import IntroScreen from "./components/IntroScreen.jsx";
