@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export default function SignInModal({ onSubmit, onGuest, OnClose }) {
+export default function SignInModal({ onSubmit, onGuest, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});

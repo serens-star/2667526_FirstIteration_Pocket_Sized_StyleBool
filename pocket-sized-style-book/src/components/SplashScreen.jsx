@@ -64,7 +64,7 @@ export default function SplashScreen({ onDone }) {
       aria-label="Pocket-Sized Style Book. Press to continue..."
     >
       <SlotImage
-        src="/images/splash-pocket.png"
+        src="src/images/splash-pocket.png"
         alt="Jean Pocket with Logo Imprinted onto it"
         classname="splash-img"
         fallback={<FallbackPocket />}

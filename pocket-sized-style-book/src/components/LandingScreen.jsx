@@ -15,12 +15,17 @@ export default function LandingScreen({
       <h1 className="sr-only">Pocket-Sized Style Book</h1>
       <div className="book">
         <img
-          src="/images/style-book.png"
+          src="src/images/style-book.png"
           alt="Pocket-Sized Style Book: an open style book of outfit collages"
           className="book-img"
           draggable="false"
         />
         {}
+        <button
+          className="hotspot hs-explore"
+          onClick={onExplore}
+          aria-label="Explore App"
+        />
         <button
           className="hotspot hs-signin"
           onClick={() => (user ? onSignIn(user) : setShowModal(true))}

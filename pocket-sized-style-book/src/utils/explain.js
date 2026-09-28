@@ -3,7 +3,7 @@ import { CATEGORIES } from "../data/categories";
 export function buildExplanation(scores, answers = [], topCode) {
   const total = Object.values(scores).reduce((a, b) => a + b, 0);
   const ranked = Object.entries(scores)
-    .map(([CommandEvent, score]) => ({
+    .map(([code, score]) => ({
       code,
       name: CATEGORIES[code].name,
       score,
@@ -16,7 +16,7 @@ export function buildExplanation(scores, answers = [], topCode) {
   const margin = top.score - runnerUp.score;
 
   let level = "Medium";
-  if (total === 0 || margin <= 1) level = "low";
+  if (total === 0 || margin <= 1) level = "Low";
   else if (top.pct >= 50 && margin >= 3) level = "High";
 
   const blurbs = {

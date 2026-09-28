@@ -1,4 +1,4 @@
-import { useState, UseCallback } from "react";
+import { useState, useCallback } from "react";
 import "./styles/App.css";
 import Header from "./components/Header.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
@@ -6,7 +6,8 @@ import LandingScreen from "./components/LandingScreen.jsx";
 import QuizScreen from "./components/QuizScreen.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
 import ResultsScreen from "./components/ResultsScreen.jsx";
-import { QUESTIONS, tiebreakerQuestions } from "./data/questions.js";
+import { QUESTIONS } from "./data/questions.js";
+import { nextTieRound } from "./utils/tiebreak.js";
 import { emptyScores, findTopAndTie } from "./utils/scoring.js";
 import { generateStyleProfile, categoryCodeFromName } from "./utils/llm.js";
 
@@ -129,7 +130,7 @@ export default function App() {
       <LandingScreen
         user={user}
         onExplore={startQuiz}
-        onSignIn={(u) => signIn(u, setUser, StartQuiz)}
+        onSignIn={(u) => signIn(u, setUser, startQuiz)}
         onSignOut={signOut}
       />
     );
