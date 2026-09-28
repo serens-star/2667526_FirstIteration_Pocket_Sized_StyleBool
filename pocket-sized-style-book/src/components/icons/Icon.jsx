@@ -1,8 +1,3 @@
-// A single, consistent line-icon set used everywhere in the app
-// instead of emoji. Every icon shares the same stroke weight,
-// corner style, and 24x24 grid so the iconography reads as one
-// deliberate system rather than mixed emoji glyphs.
-
 const base = {
   viewBox: "0 0 24 24",
   fill: "none",
@@ -20,7 +15,7 @@ function Svg({ size = 20, className = "", children }) {
   );
 }
 
-/* ---------- Category icons ---------- */
+/*  Category icons  */
 
 export function IconGem(props) {
   // Quiet Luxury
@@ -101,7 +96,7 @@ export function CategoryIcon({ code, ...rest }) {
   return <Cmp {...rest} />;
 }
 
-/* ---------- Shop item (product type) icons ---------- */
+/* Shop item (product type) icons*/
 
 export function IconOuterwear(props) {
   return (
@@ -168,7 +163,7 @@ export function ProductIcon({ type, ...rest }) {
   return <Cmp {...rest} />;
 }
 
-/* ---------- UI icons ---------- */
+/*  UI icons  */
 
 export function IconChecklist(props) {
   return (

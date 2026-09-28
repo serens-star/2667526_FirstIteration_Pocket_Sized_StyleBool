@@ -2,7 +2,13 @@ import "../styles/QuizScreen.css";
 import ProgressBar from "./ProgressBar.jsx";
 import OptionCard from "./OptionCard.jsx";
 
-export default function QuizScreen({ question, index, total, onAnswer }) {
+export default function QuizScreen({
+  question,
+  index,
+  total,
+  onAnswer,
+  onBack,
+}) {
   return (
     <section className="screen">
       <ProgressBar current={index} total={total} />
@@ -17,6 +23,11 @@ export default function QuizScreen({ question, index, total, onAnswer }) {
           />
         ))}
       </div>
+      {onBack && (
+        <button className="btn small ghost quiz-back" onCLick={onBack}>
+          ← Back
+        </button>
+      )}
     </section>
   );
 }

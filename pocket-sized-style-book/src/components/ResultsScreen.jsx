@@ -2,6 +2,9 @@ import "../styles/ResultsScreen.css";
 import IconCard from "./IconCard.jsx";
 import ShopCard from "./ShopCard.jsx";
 import { IconWarning, IconRefresh, IconCheck } from "./icons/Icon.jsx";
+import ExplainPanel from "./ExplainPanel.jsx";
+import FeedbackPanel from "./FeedbackPanel.jsx";
+import { buildExplanation } from "../utils/explain.js";
 import { STYLE_ICONS } from "../data/styleIcons.js";
 import { SHOP_ITEMS } from "../data/shopItems.js";
 
@@ -9,10 +12,13 @@ export default function ResultsScreen({
   profile,
   usedFallback,
   categoryCode,
+  scores,
+  answers,
   onRestart,
 }) {
   const icons = STYLE_ICONS[categoryCode] || [];
   const items = SHOP_ITEMS[categoryCode] || [];
+  const confidence = buildExplanation(scores, answers.categoryCode).level;
 
   return (
     <section className="screen">
@@ -28,6 +34,15 @@ export default function ResultsScreen({
             </li>
           ))}
         </ul>
+        <ExplainPanel
+          scores={scores}
+          answers={answers}
+          topCode={categoryCode}
+          usedFallback={usedFallback}
+        />
+        <FeedbackPanel
+          context={{ category: categoryCode, usedFallback, confidence }}
+        />
       </div>
 
       <div className="section-heading">Style icons for you</div>
