@@ -1,7 +1,8 @@
 import { useState, UseCallback } from "react";
 import "./styles/App.css";
 import Header from "./components/Header.jsx";
-import IntroScreen from "./components/IntroScreen.jsx";
+import SplashScreen from "./components/SplashScreen.jsx";
+import LandingScreen from "./components/LandingScreen.jsx";
 import QuizScreen from "./components/QuizScreen.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
 import ResultsScreen from "./components/ResultsScreen.jsx";
@@ -9,18 +10,38 @@ import { QUESTIONS, tiebreakerQuestions } from "./data/questions.js";
 import { emptyScores, findTopAndTie } from "./utils/scoring.js";
 import { generateStyleProfile, categoryCodeFromName } from "./utils/llm.js";
 
+function loadUser() {
+  try {
+    return JSON.parse(localStorage.getItem("psb_user"));
+  } catch {
+    return null;
+  }
+}
+
+function signIn(u, setUser, start) {
+  try {
+    localStorage.setItem("psb_user", JSON.stringify(u));
+  } catch {}
+  setUser(u);
+  start();
+}
+
 const SCREENS = {
-  INTRO: "intro",
+  SPLASH: "splash",
+  LANDING: "landing",
   QUIZ: "quiz",
   LOADING: "loading",
   RESULTS: "results",
 };
 
 export default function App() {
-  const [screen, setScreen] = useState(SCREENS.INTRO);
+  const [screen, setScreen] = useState(SCREENS.SPLASH);
+  const [user, setUser] = useState(loadUser);
+  const goLanding = useCallback(() => setScreen(SCREENS.LANDING), []);
   const [activeQuestions, setActiveQuestions] = useState(QUESTIONS);
   const [index, setIndex] = useState(0);
   const [scores, setScores] = useState(emptyScores());
+  const [answers, setAnswers] = useState([]);
   const [chosenLabels, setChosenLabels] = useState([]);
   const [inTiebreak, setInTiebreak] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -32,8 +53,21 @@ export default function App() {
     setIndex(0);
     setScores(emptyScores());
     setChosenLabels([]);
+    setAnswers([]);
     setInTiebreak(false);
     setScreen(SCREENS.QUIZ);
+  }
+
+  function goBack() {
+    const last = answers[answers.length - 1];
+    if (index === 0 || !last) return;
+    setScores((sc) => ({
+      ...sc,
+      [last.code]: Math.max(0, (sc[last.code] || 0) - 1),
+    }));
+    setAnswers((a) => a.slice(0, -1));
+    setChosenLabels((l) => l.slice(0, -1));
+    setIndex(index - 1);
   }
 
   async function handleAnswer(categoryCode, label) {
@@ -43,6 +77,7 @@ export default function App() {
     };
     const nextLabels = [...chosenLabels, label];
     setScores(nextScores);
+    setAnswers((a) => [...a, { label, code: categoryCode }]);
     setChosenLabels(nextLabels);
 
     const nextIndex = index + 1;
@@ -50,14 +85,12 @@ export default function App() {
       setIndex(nextIndex);
       return;
     }
-    if (!inTiebreak) {
-      const { isTie, tiedCodes } = findTopAndTie(nextScores);
-      if (isTie) {
-        setInTiebreak(true);
-        setActiveQuestions(tiebreakerQuestions(tiedCodes[0], tiedCodes[1]));
-        setIndex(0);
-        return;
-      }
+    const round = nextTieRound(nextScores, inTiebreak);
+    if (round) {
+      setInTiebreak(true);
+      setActiveQuestions(round);
+      setIndex(0);
+      return;
     }
 
     await runLLMProfile(nextScores, nextLabels);
@@ -79,22 +112,40 @@ export default function App() {
     setScreen(SCREENS.RESULTS);
   }
 
-  function restart() {
-    setScreen(SCREENS.INTRO);
+  function signOut() {
+    try {
+      localStorage.removeItem("psb_user");
+    } catch {}
+    setUser(null);
   }
+
+  function restart() {
+    setScreen(SCREENS.LANDING);
+  }
+
+  if (screen === SCREENS.SPLASH) return <SplashScreen onDone={goLanding} />;
+  if (screen === SCREENS.LANDING)
+    return (
+      <LandingScreen
+        user={user}
+        onExplore={startQuiz}
+        onSignIn={(u) => signIn(u, setUser, StartQuiz)}
+        onSignOut={signOut}
+      />
+    );
 
   return (
     <div className="app">
       <div className="stitch" />
       <Header />
       <main>
-        {screen === SCREENS.INTRO && <IntroScreen onStart={startQuiz} />}
         {screen === SCREENS.QUIZ && (
           <QuizScreen
             question={activeQuestions[index]}
             index={index}
             total={activeQuestions.length}
             onAnswer={handleAnswer}
+            onBack={index > 0 ? goBack : null}
           />
         )}
         {screen === SCREENS.LOADING && <LoadingScreen />}
@@ -103,6 +154,8 @@ export default function App() {
             profile={profile}
             usedFallback={usedFallback}
             categoryCode={resultCategoryCode}
+            scores={scores}
+            answers={answers}
             onRestart={restart}
           />
         )}
