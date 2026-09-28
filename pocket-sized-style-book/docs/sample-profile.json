@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-28T13:58:30.890Z",
+  "provider": "gemini",
+  "model": "gemini-flash-latest",
+  "usedFallback": true,
+  "result": {
+    "aestheticName": "Dark Academia",
+    "description": "Based on your answers (like \"Tweed blazer\" and \"Old library\"), you gravitate toward Dark Academia: a look built around pieces that feel deliberate rather than trend-chasing. This is a strong, wearable starting point for your wardrobe.",
+    "styleTips": [
+      "Anchor outfits with one signature Dark Academia piece before adding accents.",
+      "Shop your existing wardrobe first for Dark Academia-adjacent basics.",
+      "Add one new piece at a time and see how it mixes with what you own."
+    ]
+  }
+}
