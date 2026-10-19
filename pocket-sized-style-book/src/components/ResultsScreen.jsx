@@ -18,7 +18,7 @@ export default function ResultsScreen({
 }) {
   const icons = STYLE_ICONS[categoryCode] || [];
   const items = SHOP_ITEMS[categoryCode] || [];
-  const confidence = buildExplanation(scores, answers.categoryCode).level;
+  const confidence = buildExplanation(scores, answers, categoryCode).level;
 
   return (
     <section className="screen">

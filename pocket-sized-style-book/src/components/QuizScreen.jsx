@@ -24,7 +24,7 @@ export default function QuizScreen({
         ))}
       </div>
       {onBack && (
-        <button className="btn small ghost quiz-back" onCLick={onBack}>
+        <button className="btn small ghost quiz-back" onClick={onBack}>
           ← Back
         </button>
       )}

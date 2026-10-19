@@ -15,7 +15,7 @@ export default function LandingScreen({
       <h1 className="sr-only">Pocket-Sized Style Book</h1>
       <div className="book">
         <img
-          src="src/images/style-book.png"
+          src="/images/style-book.png"
           alt="Pocket-Sized Style Book: an open style book of outfit collages"
           className="book-img"
           draggable="false"
@@ -42,7 +42,7 @@ export default function LandingScreen({
       )}
       {showModal && (
         <SignInModal
-          OnClose={() => setShowModal(false)}
+          onClose={() => setShowModal(false)}
           onGuest={onExplore}
           onSubmit={(u) => {
             setShowModal(false);
