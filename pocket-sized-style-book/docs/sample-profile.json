@@ -1,15 +1,15 @@
 {
-  "at": "2026-09-28T13:58:30.890Z",
+  "at": "2026-11-10T14:04:40.693Z",
   "provider": "gemini",
-  "model": "gemini-flash-latest",
-  "usedFallback": true,
+  "model": "gemini-3.5-flash-lite",
+  "usedFallback": false,
   "result": {
     "aestheticName": "Dark Academia",
-    "description": "Based on your answers (like \"Tweed blazer\" and \"Old library\"), you gravitate toward Dark Academia: a look built around pieces that feel deliberate rather than trend-chasing. This is a strong, wearable starting point for your wardrobe.",
+    "description": "Your love for a classic tweed blazer and rich burgundy and forest green tones reflects a deeply intellectual and romantic soul. Pairing these pieces with a timeless leather satchel sets the perfect scene for spending a quiet afternoon in an old library. Your style captures a thoughtful appreciation for history, literature, and enduring elegance.",
     "styleTips": [
-      "Anchor outfits with one signature Dark Academia piece before adding accents.",
-      "Shop your existing wardrobe first for Dark Academia-adjacent basics.",
-      "Add one new piece at a time and see how it mixes with what you own."
+      "Layer knit sweaters over crisp collared shirts.",
+      "Accessorize with vintage gold rings or watches.",
+      "Choose loafers or oxfords for footwear."
     ]
   }
 }
