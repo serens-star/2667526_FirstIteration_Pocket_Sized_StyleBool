@@ -19,14 +19,14 @@ export const STYLE_ICONS = {
       "Known for high-low mixing of designer pieces with classic street staples.",
     ],
   ],
-  DA: [
+  AL: [
     [
-      "Timothée Chalamet",
-      "Leans into tweed, knitwear, and a moody, literary color palette.",
+      "Jenna Ortega",
+      "Brought a modern goth look to the mainstream with black layers, boots and dark tailoring.",
     ],
     [
-      "Maia Reficco",
-      "Often styled in tartan, blazers, and vintage-inspired academic pieces.",
+      "Willow Smith",
+      "Mixes punk and rock influences: band tees, studs, plaid and bold hair colour.",
     ],
   ],
   BE: [
@@ -35,8 +35,8 @@ export const STYLE_ICONS = {
       "Signature flowing fabrics, layered jewelry, and earthy tones.",
     ],
     [
-      "Florence Welch",
-      "Consistently wears flowing, nature-inspired, textured pieces.",
+      "Erykah Badu",
+      "Known for layered textiles, headwraps and earthy, handmade-looking jewellery.",
     ],
   ],
   Y2K: [
@@ -46,11 +46,14 @@ export const STYLE_ICONS = {
     ],
     ["Olivia Rodrigo", "Plaid skirts, chunky shoes, and glossy Y2K accents."],
   ],
-  PC: [
+  WH: [
     [
-      "Sydney Sweeney",
-      "Polished, collegiate pieces: polos, loafers, crisp whites.",
+      "Stevie Nicks",
+      "Famous for flowing shawls, lace and moon-and-star jewellery: the dreamy, mystical look.",
     ],
-    ["Selena Gomez", "Clean lines, soft neutrals, and understated tailoring."],
+    [
+      "Florence Welch",
+      "Romantic, flowing and fairy-tale pieces with a dramatic edge.",
+    ],
   ],
 };

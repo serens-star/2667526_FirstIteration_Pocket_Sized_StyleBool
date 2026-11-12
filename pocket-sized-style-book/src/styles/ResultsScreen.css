@@ -290,3 +290,29 @@
     grid-row: 2;
   }
 }
+
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--navy);
+}
+
+.palette-label {
+  margin-left: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4a557f;
+}
+
+.feedback-heart {
+  color: #d9658b;
+  vertical-align: -2px;
+}

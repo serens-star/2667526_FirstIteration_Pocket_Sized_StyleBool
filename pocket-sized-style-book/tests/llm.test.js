@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import { generateStyleProfile, categoryCodeFromName, getProvider, getModel } from "../src/utils/llm.js";
 import { emptyScores } from "../src/utils/scoring.js";
 
-const input = { scores: { ...emptyScores(), DA: 6, QL: 2 }, chosenLabels: ["Tweed blazer", "Burgundy", "Satchel", "Books"], topCode: "DA" };
-const good = { aestheticName: "Dark Academia", description: "You love tweed.", styleTips: ["a", "b", "c"] };
+const input = { scores: { ...emptyScores(), AL: 6, QL: 2 }, chosenLabels: ["Band tee", "Black and red", "Platform boots", "Small gig"], topCode: "AL" };
+const good = { aestheticName: "Alternative", description: "You love band tees.", styleTips: ["a", "b", "c"] };
 
 // Each provider returns text in a different response shape.
 const PROVIDERS = {
@@ -29,6 +29,7 @@ function setup(name, text) {
   return fetchMock;
 }
 
+beforeEach(() => { vi.stubEnv("VITE_AI_PROXY", ""); });
 afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); });
 
 describe("provider selection", () => {
@@ -62,8 +63,8 @@ describe("request shape", () => {
     expect(opts.headers["x-goog-api-key"]).toBe("test");
     const body = JSON.parse(opts.body);
     expect(body.generationConfig.responseMimeType).toBe("application/json");
-    expect(body.systemInstruction.parts[0].text).toContain("Dark Academia");
-    expect(body.contents[0].parts[0].text).toContain("Tweed blazer");
+    expect(body.systemInstruction.parts[0].text).toContain("Alternative");
+    expect(body.contents[0].parts[0].text).toContain("Band tee");
   });
 });
 
@@ -73,13 +74,13 @@ describe.each(Object.keys(PROVIDERS))("generateStyleProfile via %s", (name) => {
     vi.stubEnv("VITE_ANTHROPIC_API_KEY", "");
     const { result, usedFallback } = await generateStyleProfile(input);
     expect(usedFallback).toBe(true);
-    expect(result.aestheticName).toBe("Dark Academia");
+    expect(result.aestheticName).toBe("Alternative");
     expect(result.styleTips).toHaveLength(3);
   });
   it("fallback still quotes the user's own answers", async () => {
     vi.stubEnv("VITE_GEMINI_API_KEY", "");
     vi.stubEnv("VITE_ANTHROPIC_API_KEY", "");
-    expect((await generateStyleProfile(input)).result.description).toContain("Tweed blazer");
+    expect((await generateStyleProfile(input)).result.description).toContain("Band tee");
   });
   it("uses the model result when valid", async () => {
     setup(name, JSON.stringify(good));
@@ -94,13 +95,13 @@ describe.each(Object.keys(PROVIDERS))("generateStyleProfile via %s", (name) => {
   it.each([
     ["invented category", JSON.stringify({ ...good, aestheticName: "Cottagecore" })],
     ["malformed JSON", "Sure! Here's your profile"],
-    ["missing tips", JSON.stringify({ aestheticName: "Dark Academia", description: "x" })],
+    ["missing tips", JSON.stringify({ aestheticName: "Alternative", description: "x" })],
     ["empty text", ""],
   ])("falls back on %s", async (_n, text) => {
     setup(name, text);
     const { result, usedFallback } = await generateStyleProfile(input);
     expect(usedFallback).toBe(true);
-    expect(result.aestheticName).toBe("Dark Academia");
+    expect(result.aestheticName).toBe("Alternative");
   });
   it.each([[404], [429], [500]])("falls back on HTTP %i (wrong model, rate limit, server error)", async (status) => {
     setup(name, "{}");
@@ -118,5 +119,25 @@ describe("categoryCodeFromName", () => {
   it("maps names to codes and uses the fallback for unknown names", () => {
     expect(categoryCodeFromName("Streetwear", "QL")).toBe("SW");
     expect(categoryCodeFromName("Nope", "QL")).toBe("QL");
+  });
+});
+describe("proxy mode", () => {
+  it("is chosen first when VITE_AI_PROXY is set, and sends no API key from the browser", async () => {
+    vi.stubEnv("VITE_AI_PROXY", "/api/generate");
+    vi.stubEnv("VITE_GEMINI_API_KEY", "should-not-be-used");
+    expect(getProvider()).toBe("proxy");
+    const f = reply({ text: JSON.stringify(good) });
+    vi.stubGlobal("fetch", f);
+    const out = await generateStyleProfile(input);
+    expect(out.usedFallback).toBe(false);
+    const [url, opts] = f.mock.calls[0];
+    expect(url).toBe("/api/generate");
+    expect(JSON.stringify(opts)).not.toContain("should-not-be-used");
+    expect(Object.keys(JSON.parse(opts.body)).sort()).toEqual(["systemPrompt", "userPrompt"]);
+  });
+  it("falls back when the proxy returns an error", async () => {
+    vi.stubEnv("VITE_AI_PROXY", "/api/generate");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 502, text: async () => "x" }));
+    expect((await generateStyleProfile(input)).usedFallback).toBe(true);
   });
 });

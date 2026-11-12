@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { saveFeedback } from "../utils/feedback.js";
+import { IconCheck, IconClose, IconHeart } from "./icons/Icon.jsx";
 
 const REASONS = [
   "Not my style",
@@ -21,7 +22,8 @@ export default function FeedbackPanel({ context }) {
   if (done)
     return (
       <p className="feedback" role="status">
-        Thanks! Your feedback helps us tune your results. 💙
+        Thanks! Your feedback helps us tune your results.{" "}
+        <IconHeart size={14} className="feedback-heart" />
       </p>
     );
 
@@ -36,14 +38,16 @@ export default function FeedbackPanel({ context }) {
           aria-pressed={helpful === true}
           onClick={() => send(true)}
         >
-           Yes
+          <IconCheck size={15} />
+          Yes
         </button>
         <button
           className="btn small ghost"
           aria-pressed={helpful === false}
           onClick={() => setHelpful(false)}
         >
-           Not quite
+          <IconClose size={15} />
+          Not quite
         </button>
       </div>
       {helpful === false && (

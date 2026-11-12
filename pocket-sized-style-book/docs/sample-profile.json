@@ -1,15 +1,15 @@
 {
-  "at": "2026-11-10T14:04:40.693Z",
-  "provider": "gemini",
-  "model": "gemini-3.5-flash-lite",
-  "usedFallback": false,
+  "at": "2026-11-12T14:42:31.121Z",
+  "provider": "proxy",
+  "model": "set on the server",
+  "usedFallback": true,
   "result": {
-    "aestheticName": "Dark Academia",
-    "description": "Your love for a classic tweed blazer and rich burgundy and forest green tones reflects a deeply intellectual and romantic soul. Pairing these pieces with a timeless leather satchel sets the perfect scene for spending a quiet afternoon in an old library. Your style captures a thoughtful appreciation for history, literature, and enduring elegance.",
+    "aestheticName": "Alternative",
+    "description": "Based on your answers (like \"Band tee\" and \"Small gig, then a thrift crawl\"), you gravitate toward Alternative. Grunge, goth and punk influences: band tees, black layers, plaid, studs, chains and platform boots. Start with the picks below and build from there.",
     "styleTips": [
-      "Layer knit sweaters over crisp collared shirts.",
-      "Accessorize with vintage gold rings or watches.",
-      "Choose loafers or oxfords for footwear."
+      "Start with black and add one red or plaid accent.",
+      "Layer a band tee, a belt and chunky boots.",
+      "Mix soft and hard: a mini skirt with studs and tights."
     ]
   }
 }

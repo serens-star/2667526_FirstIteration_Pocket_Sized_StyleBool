@@ -13,9 +13,9 @@ describe("scoring", () => {
     expect(r).toMatchObject({ topCode: "SW", isTie: false, tiedCodes: null });
   });
   it("detects a two-way tie for first", () => {
-    const r = findTopAndTie({ ...emptyScores(), DA: 4, BE: 4, QL: 2 });
+    const r = findTopAndTie({ ...emptyScores(), AL: 4, BE: 4, QL: 2 });
     expect(r.isTie).toBe(true);
-    expect(r.tiedCodes.sort()).toEqual(["BE", "DA"]);
+    expect(r.tiedCodes.sort()).toEqual(["AL", "BE"]);
   });
   it("does not flag a tie for lower places", () => {
     expect(
@@ -42,8 +42,8 @@ describe("quiz data integrity", () => {
     });
   });
   it("tiebreaker questions only offer the two tied categories", () => {
-    tiebreakerQuestions("DA", "BE").forEach((q) => {
-      q.o.forEach(([, c]) => expect(["DA", "BE"]).toContain(c));
+    tiebreakerQuestions("AL", "BE").forEach((q) => {
+      q.o.forEach(([, c]) => expect(["AL", "BE"]).toContain(c));
     });
   });
 });

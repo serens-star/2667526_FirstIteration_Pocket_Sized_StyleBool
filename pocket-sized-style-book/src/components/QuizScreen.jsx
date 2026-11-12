@@ -1,6 +1,7 @@
 import "../styles/QuizScreen.css";
 import ProgressBar from "./ProgressBar.jsx";
 import OptionCard from "./OptionCard.jsx";
+import { IconArrowLeft } from "./icons/Icon.jsx";
 
 export default function QuizScreen({
   question,
@@ -25,7 +26,8 @@ export default function QuizScreen({
       </div>
       {onBack && (
         <button className="btn small ghost quiz-back" onClick={onBack}>
-          ← Back
+          <IconArrowLeft size={15} />
+          Back
         </button>
       )}
     </section>

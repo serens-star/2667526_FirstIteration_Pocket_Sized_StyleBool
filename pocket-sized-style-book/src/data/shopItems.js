@@ -15,13 +15,13 @@ export const SHOP_ITEMS = {
     ["Layered chain necklace", "R80-150", "Typo", "accessory"],
     ["Oversized denim jacket", "R350-500", "Thrifted / Vinted", "outerwear"]
   ],
-  DA: [
-    ["Argyle knit vest", "R280-400", "Woolworths", "outerwear"],
-    ["Pleated tartan skirt", "R300-450", "Cotton On", "bottom"],
-    ["Round wire-frame glasses (non-prescription)", "R150-250", "Sunglass Hut", "accessory"],
-    ["Loafers with socks", "R400-600", "Spitz", "footwear"],
-    ["Leather satchel bag", "R450-650", "Mr Price", "bag"],
-    ["Turtleneck jumper", "R250-350", "Cotton On", "top"]
+  AL: [
+    ["Graphic band tee", "R120-250", "Mr Price / Thrifted", "top"],
+    ["Pleated plaid mini skirt", "R200-350", "Cotton On", "bottom"],
+    ["Studded belt", "R80-180", "Typo", "accessory"],
+    ["Platform lace-up boots", "R550-900", "Spitz", "footwear"],
+    ["Black oversized zip hoodie", "R280-420", "Sportscene", "outerwear"],
+    ["Fishnet or patterned tights", "R60-120", "Mr Price", "accessory"]
   ],
   BE: [
     ["Flowy maxi skirt", "R280-420", "Mr Price", "bottom"],
@@ -39,12 +39,12 @@ export const SHOP_ITEMS = {
     ["Metallic mini bag", "R200-350", "Cotton On", "bag"],
     ["Tinted sunglasses", "R150-250", "Sunglass Hut", "accessory"]
   ],
-  PC: [
-    ["Polo shirt", "R200-320", "Cotton On", "top"],
-    ["Pleated tennis skirt", "R280-400", "Woolworths", "bottom"],
-    ["Penny loafers", "R450-650", "Spitz", "footwear"],
-    ["Cable-knit sweater vest", "R280-400", "Mr Price", "outerwear"],
-    ["Pearl drop earrings", "R100-180", "Typo", "accessory"],
-    ["Structured headband", "R80-150", "Cotton On", "accessory"]
+  WH: [
+    ["Tiered paisley or velvet maxi skirt", "R280-450", "Superbalist", "bottom"],
+    ["Lace-trim cami top", "R120-220", "Cotton On", "top"],
+    ["Long lace-trim cardigan", "R250-400", "Woolworths", "outerwear"],
+    ["Moon and star pendant necklace", "R80-150", "Typo", "accessory"],
+    ["Velvet Mary Jane shoes", "R400-650", "Spitz", "footwear"],
+    ["Embroidered velvet shoulder bag", "R200-350", "Mr Price", "bag"]
   ]
 };

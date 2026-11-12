@@ -4,98 +4,98 @@ export const QUESTIONS = [
   { t: "Pick your ideal Saturday fit:", o: [
     ["Crisp white shirt + tailored trousers", "QL"],
     ["Oversized hoodie + cargo pants", "SW"],
-    ["Tweed blazer + pleated skirt", "DA"],
+    ["Band tee + plaid mini + platform boots", "AL"],
     ["Flowy skirt + layered necklaces", "BE"],
     ["Low-rise jeans + baby tee", "Y2K"],
-    ["Polo + tennis skirt", "PC"]
+    ["Tiered maxi skirt + lace-trim cami", "WH"]
   ]},
   { t: "Choose a color palette:", o: [
     ["Cream, camel, ivory", "QL"],
     ["Black, grey, neon accent", "SW"],
-    ["Burgundy, forest green, mustard", "DA"],
+    ["Black, charcoal, blood red", "AL"],
     ["Terracotta, sage, sand", "BE"],
     ["Baby pink, silver, lime", "Y2K"],
-    ["White, navy, pastel pink", "PC"]
+    ["Plum, forest green, antique gold", "WH"]
   ]},
   { t: "Pick a bag:", o: [
     ["Structured leather tote", "QL"],
     ["Chest rig / crossbody", "SW"],
-    ["Vintage leather satchel", "DA"],
+    ["Studded or chain-strap shoulder bag", "AL"],
     ["Woven straw tote", "BE"],
     ["Tiny metallic shoulder bag", "Y2K"],
-    ["Quilted mini bag", "PC"]
+    ["Embroidered velvet shoulder bag", "WH"]
   ]},
   { t: "Pick your dream weekend plan:", o: [
     ["Gallery opening", "QL"],
     ["Skate park with friends", "SW"],
-    ["Reading in an old library", "DA"],
+    ["Small gig, then a thrift crawl", "AL"],
     ["Farmers market and a nature walk", "BE"],
     ["Vintage arcade and a mall trip", "Y2K"],
-    ["Tennis and brunch", "PC"]
+    ["Candlelit market with tarot and vintage stalls", "WH"]
   ]},
   { t: "Choose a shoe:", o: [
     ["Leather loafers", "QL"],
     ["Chunky sneakers", "SW"],
-    ["Oxford lace-ups", "DA"],
+    ["Chunky platform boots", "AL"],
     ["Suede ankle boots", "BE"],
     ["Platform sneakers", "Y2K"],
-    ["Penny loafers", "PC"]
+    ["Velvet Mary Janes", "WH"]
   ]},
   { t: "Pick a texture you're drawn to:", o: [
     ["Silk and cashmere", "QL"],
     ["Denim and mesh", "SW"],
-    ["Wool and tweed", "DA"],
+    ["Leather, fishnet and distressed denim", "AL"],
     ["Linen and crochet", "BE"],
     ["Satin and metallic", "Y2K"],
-    ["Cotton pique and knit", "PC"]
+    ["Lace, velvet and chiffon", "WH"]
   ]},
   { t: "Pick a movie aesthetic:", o: [
     ["Minimalist arthouse film", "QL"],
     ["Gritty city drama", "SW"],
-    ["Dark academic mystery", "DA"],
+    ["Dark teen cult classic", "AL"],
     ["Coming-of-age road trip", "BE"],
     ["Early-2000s teen comedy", "Y2K"],
-    ["Ivy-league campus film", "PC"]
+    ["Fairy-tale fantasy film", "WH"]
   ]},
   { t: "Choose an accessory:", o: [
     ["Delicate gold studs", "QL"],
     ["Chain necklace", "SW"],
-    ["Wire-frame glasses", "DA"],
+    ["Studded belt and wrist cuffs", "AL"],
     ["Beaded layered necklace", "BE"],
     ["Butterfly hair clips", "Y2K"],
-    ["Pearl earrings", "PC"]
+    ["Moon and star pendant", "WH"]
   ]},
   { t: "Pick a jacket:", o: [
     ["Tailored blazer", "QL"],
     ["Oversized denim jacket", "SW"],
-    ["Wool overcoat", "DA"],
+    ["Worn leather or studded jacket", "AL"],
     ["Suede fringe jacket", "BE"],
     ["Cropped bomber", "Y2K"],
-    ["Cable-knit cardigan", "PC"]
+    ["Long lace-trim cardigan", "WH"]
   ]},
   { t: "Choose a print (or none):", o: [
     ["No print, clean and solid", "QL"],
     ["Bold graphic print", "SW"],
-    ["Plaid or tartan", "DA"],
+    ["Band logos and skulls", "AL"],
     ["Paisley or botanical", "BE"],
     ["Butterfly or flame motif", "Y2K"],
-    ["Stripes or gingham", "PC"]
+    ["Moons, stars and celestial motifs", "WH"]
   ]},
   { t: "Pick a hairstyle vibe:", o: [
     ["Sleek low bun", "QL"],
     ["Braids with a cap", "SW"],
-    ["Loose vintage waves", "DA"],
+    ["Choppy cut with colour streaks", "AL"],
     ["Natural beachy waves", "BE"],
     ["Space buns or clips", "Y2K"],
-    ["Half-up bow ponytail", "PC"]
+    ["Long loose waves with tiny braids", "WH"]
   ]},
   { t: "Pick a comfort item to carry:", o: [
     ["Leather-bound notebook", "QL"],
     ["Portable speaker", "SW"],
-    ["Worn paperback novel", "DA"],
+    ["Headphones and a zine", "AL"],
     ["Herbal tea flask", "BE"],
     ["Disposable camera", "Y2K"],
-    ["Scrunchie and lip balm", "PC"]
+    ["Pocket tarot deck", "WH"]
   ]}
 ];
 

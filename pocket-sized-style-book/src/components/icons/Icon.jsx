@@ -38,12 +38,11 @@ export function IconSneaker(props) {
   );
 }
 
-export function IconBook(props) {
-  // Dark Academia
+export function IconBolt(props) {
+  // Alternative
   return (
     <Svg {...props}>
-      <path d="M3 6c3-1.4 6-1.4 9 0v13c-3-1.4-6-1.4-9 0V6z" />
-      <path d="M21 6c-3-1.4-6-1.4-9 0v13c3-1.4 6-1.4 9 0V6z" />
+      <path d="M13 3L5 13.5h6L10 21l8-10.5h-6L13 3z" />
     </Svg>
   );
 }
@@ -59,7 +58,7 @@ export function IconLeaf(props) {
 }
 
 export function IconButterfly(props) {
-  // Y2K / Retro
+  // Y2K
   return (
     <Svg {...props}>
       <path d="M12 5v14" />
@@ -71,13 +70,12 @@ export function IconButterfly(props) {
   );
 }
 
-export function IconBow(props) {
-  // Preppy / Clean Girl
+export function IconMoon(props) {
+  // Whimsy
   return (
     <Svg {...props}>
-      <path d="M12 12L4.5 6.5v11L12 12z" />
-      <path d="M12 12l7.5-5.5v11L12 12z" />
-      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" />
+      <path d="M17 4v3M15.5 5.5h3" />
     </Svg>
   );
 }
@@ -85,10 +83,10 @@ export function IconBow(props) {
 export const CATEGORY_ICONS = {
   QL: IconGem,
   SW: IconSneaker,
-  DA: IconBook,
+  AL: IconBolt,
   BE: IconLeaf,
   Y2K: IconButterfly,
-  PC: IconBow
+  WH: IconMoon
 };
 
 export function CategoryIcon({ code, ...rest }) {
@@ -226,6 +224,32 @@ export function IconCheck(props) {
   return (
     <Svg {...props}>
       <path d="M5 12.5l4.2 4.2L19 7" />
+    </Svg>
+  );
+}
+
+export function IconArrowLeft(props) {
+  return (
+    <Svg {...props}>
+      <path d="M19 12H5" />
+      <path d="M11 6l-6 6 6 6" />
+    </Svg>
+  );
+}
+
+export function IconClose(props) {
+  return (
+    <Svg {...props}>
+      <path d="M6 6l12 12" />
+      <path d="M18 6L6 18" />
+    </Svg>
+  );
+}
+
+export function IconHeart(props) {
+  return (
+    <Svg {...props}>
+      <path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z" />
     </Svg>
   );
 }

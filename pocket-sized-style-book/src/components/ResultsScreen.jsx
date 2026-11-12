@@ -7,6 +7,7 @@ import FeedbackPanel from "./FeedbackPanel.jsx";
 import { buildExplanation } from "../utils/explain.js";
 import { STYLE_ICONS } from "../data/styleIcons.js";
 import { SHOP_ITEMS } from "../data/shopItems.js";
+import { CATEGORIES } from "../data/categories.js";
 
 export default function ResultsScreen({
   profile,
@@ -18,6 +19,7 @@ export default function ResultsScreen({
 }) {
   const icons = STYLE_ICONS[categoryCode] || [];
   const items = SHOP_ITEMS[categoryCode] || [];
+  const info = CATEGORIES[categoryCode];
   const confidence = buildExplanation(scores, answers, categoryCode).level;
 
   return (
@@ -25,6 +27,14 @@ export default function ResultsScreen({
       <div className="result-card">
         <div className="result-eyebrow">Your style profile</div>
         <div className="result-name">{profile.aestheticName}</div>
+        {info && (
+          <div className="palette" role="img" aria-label={`${info.name} colour palette`}>
+            {info.palette.map((hex) => (
+              <span key={hex} className="swatch" style={{ background: hex }} />
+            ))}
+            <span className="palette-label">Signature palette</span>
+          </div>
+        )}
         <p className="result-desc">{profile.description}</p>
         <ul className="tips">
           {profile.styleTips.map((tip) => (
