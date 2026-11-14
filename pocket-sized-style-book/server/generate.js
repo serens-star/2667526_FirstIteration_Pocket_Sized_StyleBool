@@ -1,15 +1,10 @@
-// Server-side AI relay. The API key lives ONLY here (env vars without the VITE_ prefix),
-// so it is never bundled into the browser code.
-// Used by: api/generate.js (Vercel function) and the Vite dev/preview server (vite.config.js).
-
 export const LIMITS = {
   maxPromptChars: 6000,
   maxRequestsPerMinute: 20,
   timeoutMs: 20000,
 };
 
-const hits = new Map(); // ip -> [timestamps]. Best-effort limiter (per server instance).
-
+const hits = new Map();
 export function rateLimited(ip, now = Date.now()) {
   const recent = (hits.get(ip) || []).filter((t) => now - t < 60000);
   if (recent.length >= LIMITS.maxRequestsPerMinute) {
@@ -59,7 +54,6 @@ export async function handleGenerate({
     : null;
   if (!provider) return fail(503, "AI is not configured on the server");
 
-  // Model and generation settings are fixed here, never taken from the browser.
   const model =
     provider === "gemini"
       ? env.GEMINI_MODEL || "gemini-3.5-flash-lite"
@@ -107,7 +101,6 @@ export async function handleGenerate({
     }
 
     if (!response.ok) {
-      // Log details on the server only; never forward upstream bodies to the browser.
       const detail = (await response.text().catch(() => ""))
         .replace(/\s+/g, " ")
         .slice(0, 300);

@@ -8,14 +8,13 @@ import {
 } from "../src/utils/llm.js";
 import { emptyScores } from "../src/utils/scoring.js";
 
-// Proxy mode: route the browser-style call to the real server handler so this script
-// exercises the same code path as the deployed app (key read from GEMINI_API_KEY in .env).
+
 const env = loadEnv("development", process.cwd(), "");
 let usedModel = getModel();
 if (getProvider() === "proxy") {
   const realFetch = globalThis.fetch;
   globalThis.fetch = async (url, opts) => {
-    // Only the browser-style call to the proxy is intercepted. The proxy's own call to Google must go to the real network.
+    
     if (!String(url).startsWith("/api/")) return realFetch(url, opts);
     const out = await handleGenerate({
       method: opts.method,

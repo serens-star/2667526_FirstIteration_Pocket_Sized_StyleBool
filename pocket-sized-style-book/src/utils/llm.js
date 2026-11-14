@@ -3,9 +3,9 @@ import { CATEGORIES, NAME_TO_CODE } from "../data/categories.js";
 const ENV = import.meta.env ?? process.env;
 
 export function getProvider() {
-  // Preferred: a server-side proxy (e.g. "/api/generate") that holds the key. No secret reaches the browser.
+  
   if (ENV.VITE_AI_PROXY) return "proxy";
-  // Direct browser keys still work for quick local experiments, but they are visible to anyone using the page.
+  
   if (ENV.VITE_GEMINI_API_KEY) return "gemini";
   if (ENV.VITE_ANTHROPIC_API_KEY) return "anthropic";
   return null;
