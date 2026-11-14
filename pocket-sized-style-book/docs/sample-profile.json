@@ -1,15 +1,15 @@
 {
-  "at": "2026-11-12T14:42:31.121Z",
+  "at": "2026-11-14T13:51:08.085Z",
   "provider": "proxy",
-  "model": "set on the server",
-  "usedFallback": true,
+  "model": "gemini-3.5-flash-lite",
+  "usedFallback": false,
   "result": {
     "aestheticName": "Alternative",
-    "description": "Based on your answers (like \"Band tee\" and \"Small gig, then a thrift crawl\"), you gravitate toward Alternative. Grunge, goth and punk influences: band tees, black layers, plaid, studs, chains and platform boots. Start with the picks below and build from there.",
+    "description": "Your rebellious spirit truly shines through in your fashion choices. Picking a Band tee and choosing Black, charcoal, blood red shows you love unapologetic, edgy textures with a heavy dose of rock-and-roll attitude. Pair your favorite graphic shirt with distressed denim and your go-to studded or chain-strap shoulder bag for the ultimate effortless gig-ready ensemble.",
     "styleTips": [
-      "Start with black and add one red or plaid accent.",
-      "Layer a band tee, a belt and chunky boots.",
-      "Mix soft and hard: a mini skirt with studs and tights."
+      "Layer a distressed band tee over a mesh long-sleeve top.",
+      "Pair your studded or chain-strap shoulder bag with heavy combat boots.",
+      "Accessorize with layered silver chains to enhance your dark aesthetic."
     ]
   }
 }
