@@ -1,13 +1,14 @@
 import "../styles/ResultsScreen.css";
 import IconCard from "./IconCard.jsx";
 import ShopCard from "./ShopCard.jsx";
-import { IconWarning, IconRefresh, IconCheck } from "./icons/Icon.jsx";
+import { IconWarning, IconRefresh, IconCheck, IconHeart } from "./icons/Icon.jsx";
 import ExplainPanel from "./ExplainPanel.jsx";
 import FeedbackPanel from "./FeedbackPanel.jsx";
 import { buildExplanation } from "../utils/explain.js";
 import { STYLE_ICONS } from "../data/styleIcons.js";
 import { SHOP_ITEMS } from "../data/shopItems.js";
 import { CATEGORIES } from "../data/categories.js";
+import { itemId, isSaved } from "../utils/wishlist.js";
 
 export default function ResultsScreen({
   profile,
@@ -16,6 +17,9 @@ export default function ResultsScreen({
   scores,
   answers,
   onRestart,
+  wishlist = [],
+  onToggleWish,
+  onOpenWishlist,
 }) {
   const icons = STYLE_ICONS[categoryCode] || [];
   const items = SHOP_ITEMS[categoryCode] || [];
@@ -72,11 +76,26 @@ export default function ResultsScreen({
             retailer={retailer}
             iconType={iconType}
             aestheticName={profile.aestheticName}
+            saved={isSaved(wishlist, itemId(categoryCode, name))}
+            onToggleSave={() =>
+              onToggleWish({
+                id: itemId(categoryCode, name),
+                name,
+                price,
+                retailer,
+                iconType,
+                category: profile.aestheticName,
+              })
+            }
           />
         ))}
       </div>
 
       <div className="actions-row">
+        <button className="btn small" onClick={onOpenWishlist}>
+          <IconHeart size={15} />
+          Wishlist ({wishlist.length})
+        </button>
         <button className="btn small" onClick={onRestart}>
           <IconRefresh size={15} />
           Retake quiz

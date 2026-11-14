@@ -7,9 +7,9 @@ const base = {
   strokeLinejoin: "round"
 };
 
-function Svg({ size = 20, className = "", children }) {
+function Svg({ size = 20, className = "", fill, children }) {
   return (
-    <svg width={size} height={size} className={`icon ${className}`} {...base}>
+    <svg width={size} height={size} className={`icon ${className}`} {...base} {...(fill ? { fill } : {})}>
       {children}
     </svg>
   );

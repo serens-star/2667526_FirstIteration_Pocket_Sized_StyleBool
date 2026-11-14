@@ -6,6 +6,8 @@ import LandingScreen from "./components/LandingScreen.jsx";
 import QuizScreen from "./components/QuizScreen.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
 import ResultsScreen from "./components/ResultsScreen.jsx";
+import WishlistScreen from "./components/WishlistScreen.jsx";
+import { loadWishlist, toggleWishlist, clearWishlist } from "./utils/wishlist.js";
 import { QUESTIONS } from "./data/questions.js";
 import { nextTieRound } from "./utils/tiebreak.js";
 import { emptyScores, findTopAndTie } from "./utils/scoring.js";
@@ -33,6 +35,7 @@ const SCREENS = {
   QUIZ: "quiz",
   LOADING: "loading",
   RESULTS: "results",
+  WISHLIST: "wishlist",
 };
 
 export default function App() {
@@ -48,6 +51,8 @@ export default function App() {
   const [profile, setProfile] = useState(null);
   const [usedFallback, setUsedFallback] = useState(false);
   const [resultCategoryCode, setResultCategoryCode] = useState(null);
+  const [wishlist, setWishlist] = useState(loadWishlist);
+  const [wishFrom, setWishFrom] = useState(SCREENS.RESULTS);
 
   function startQuiz() {
     setActiveQuestions(QUESTIONS);
@@ -120,6 +125,20 @@ export default function App() {
     setUser(null);
   }
 
+  function toggleWish(item) {
+    setWishlist((list) => toggleWishlist(list, item));
+  }
+
+  function openWishlist() {
+    if (screen !== SCREENS.WISHLIST) setWishFrom(screen);
+    setScreen(SCREENS.WISHLIST);
+  }
+
+  function closeWishlist() {
+    // Go back to where the user came from; never back into a quiz or loading state that no longer exists.
+    setScreen(wishFrom === SCREENS.RESULTS && profile ? SCREENS.RESULTS : SCREENS.LANDING);
+  }
+
   function restart() {
     setScreen(SCREENS.LANDING);
   }
@@ -138,7 +157,12 @@ export default function App() {
   return (
     <div className="app">
       <div className="stitch" />
-      <Header />
+      <Header
+        savedCount={wishlist.length}
+        onOpenWishlist={
+          screen === SCREENS.RESULTS || screen === SCREENS.WISHLIST ? openWishlist : undefined
+        }
+      />
       <main>
         {screen === SCREENS.QUIZ && (
           <QuizScreen
@@ -158,6 +182,17 @@ export default function App() {
             scores={scores}
             answers={answers}
             onRestart={restart}
+            wishlist={wishlist}
+            onToggleWish={toggleWish}
+            onOpenWishlist={openWishlist}
+          />
+        )}
+        {screen === SCREENS.WISHLIST && (
+          <WishlistScreen
+            items={wishlist}
+            onToggle={toggleWish}
+            onClear={() => setWishlist(clearWishlist())}
+            onBack={closeWishlist}
           />
         )}
       </main>

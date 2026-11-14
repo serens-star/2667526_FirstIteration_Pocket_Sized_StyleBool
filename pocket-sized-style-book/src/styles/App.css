@@ -115,3 +115,22 @@ main {
   margin-top: 26px;
   flex-wrap: wrap;
 }
+
+.header-wish {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 6px 12px;
+  border: 2px solid var(--navy);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--navy);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.header-wish:focus-visible {
+  outline: 3px solid var(--lavender);
+  outline-offset: 2px;
+}
