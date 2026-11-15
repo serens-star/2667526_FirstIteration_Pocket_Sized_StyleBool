@@ -20,7 +20,7 @@ export default function SignInModal({ onSubmit, onGuest, onClose }) {
     const next = {};
     if (!name.trim()) next.name = "What should we call you?";
     if (!EMAIL_RE.test(email.trim()))
-      next.email = "Enter a valid email, e.g. styleicon@example.com";
+      next.email = "Please enter a valid email";
     setErrors(next);
     if (Object.keys(next).length === 0)
       onSubmit({ name: name.trim(), email: email.trim() });
@@ -37,10 +37,15 @@ export default function SignInModal({ onSubmit, onGuest, onClose }) {
         onSubmit={submit}
         noValidate
       >
-        <h2 id="si-title">Sign in</h2>
-        <label htmlFor="si-name">Name</label>
+        <h2 id="si-title" className="sr-only">
+          Sign in
+        </h2>
+        <label htmlFor="si-name" className="sr-only">
+          Name
+        </label>
         <input
           id="si-name"
+          className="si-field si-name"
           ref={firstRef}
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -49,13 +54,16 @@ export default function SignInModal({ onSubmit, onGuest, onClose }) {
           aria-describedby={errors.name ? "si-name-err" : undefined}
         />
         {errors.name && (
-          <p id="si-name-err" className="field-err" role="alert">
+          <p id="si-name-err" className="field-err si-err si-name-err" role="alert">
             {errors.name}
           </p>
         )}
-        <label htmlFor="si-email">Email</label>
+        <label htmlFor="si-email" className="sr-only">
+          Email
+        </label>
         <input
           id="si-email"
+          className="si-field si-email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -64,21 +72,15 @@ export default function SignInModal({ onSubmit, onGuest, onClose }) {
           aria-describedby={errors.email ? "si-email-err" : undefined}
         />
         {errors.email && (
-          <p id="si-email-err" className="field-err" role="alert">
+          <p id="si-email-err" className="field-err si-err si-email-err" role="alert">
             {errors.email}
           </p>
         )}
-        <p className="modal-note">
-          Details are stored only on this device (no password needed).
+        <p className="sr-only">
+          Details are stored only on this device (no password needed)
         </p>
-        <div className="actions-row">
-          <button type="submit" className="btn">
-            Sign in &amp; start quiz
-          </button>
-          <button type="button" className="btn small ghost" onClick={onGuest}>
-            Continue as guest
-          </button>
-        </div>
+        <button type="submit" className="si-btn si-submit" aria-label="Sign in and start quiz" />
+        <button type="button" className="si-btn si-guest" onClick={onGuest} aria-label="Continue as guest" />
       </form>
     </div>
   );

@@ -59,7 +59,6 @@
   aspect-ratio: 1100 / 1556;
   border-radius: 18px;
   overflow: hidden;
-  container-type: inline-size;
   box-shadow: 0 10px 24px rgba(38, 48, 90, 0.35);
   animation: pop 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -75,30 +74,23 @@
   left: 5%;
   width: 25%;
   white-space: nowrap;
-  padding: 0.1em 0;
+  padding: 0.4em 0;
   border: 2px solid var(--navy);
   border-radius: 999px;
   background: #f4a6c6;
   color: var(--navy);
   font-family: "Caveat", cursive;
-  font-size: 4.4cqw;
+  font-size: clamp(0.8rem, 3.4vw, 1.2rem);
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 3px 0 var(--navy);
   transform: rotate(-3deg);
-  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s,
-    background 0.15s;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s, background 0.15s;
   animation: wiggle 3.2s ease-in-out infinite;
 }
-.pill-signin {
-  top: 23%;
-}
-.pill-explore {
-  top: 44%;
-  animation-delay: 0.6s;
-  transform: rotate(2deg);
-}
+.pill-signin { top: 20%; }
+.pill-explore { top: 37%; animation-delay: 0.6s; transform: rotate(2deg); }
 .pill:hover {
   background: #ffc2da;
   transform: translateY(-3px) scale(1.07) rotate(-2deg);
@@ -114,13 +106,8 @@
   outline-offset: 3px;
 }
 @keyframes wiggle {
-  0%,
-  100% {
-    transform: rotate(-3deg);
-  }
-  50% {
-    transform: rotate(3deg) translateY(-2px);
-  }
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg) translateY(-2px); }
 }
 .welcome {
   margin: 4px 0 0;
@@ -151,43 +138,57 @@
   z-index: 20;
 }
 .modal {
-  background: var(--cream);
-  border: 3px solid var(--navy);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  width: min(100%, 400px);
+  position: relative;
+  width: min(92vw, 440px);
+  aspect-ratio: 447 / 559;
+  background: url("/images/signin-card.png") center / 100% 100% no-repeat;
+  container-type: inline-size;
   animation: pop 0.3s;
 }
-.modal h2 {
-  font-family: "Caveat", cursive;
-  font-size: 2rem;
-  margin: 0 0 8px;
-}
-.modal label {
-  display: block;
-  font-weight: 700;
-  margin-top: 12px;
-}
-.modal input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 2px solid var(--navy);
-  border-radius: var(--radius-md);
+/* Everything below is positioned in % of the drawing so it lines up at any size. */
+.si-field {
+  position: absolute;
+  left: 16%;
+  width: 71.8%;
+  height: 7.7%;
+  padding: 0 4%;
+  border: 0;
+  background: transparent;
   font: inherit;
-  background: #fff;
+  font-size: 4.6cqw;
+  color: var(--navy);
 }
-.modal input[aria-invalid="true"] {
-  border-color: var(--err);
+.si-name { top: 30.9%; }
+.si-email { top: 56%; }
+.si-field:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 12px;
 }
-.field-err {
-  color: var(--err);
-  font-size: 0.85rem;
-  margin: 4px 0 0;
+.si-field[aria-invalid="true"] { outline: 2px solid var(--err); border-radius: 12px; }
+.si-err {
+  position: absolute;
+  left: 16%;
+  width: 72%;
+  margin: 0;
+  font-size: 3.4cqw;
+  font-weight: 700;
 }
-.modal-note {
-  font-size: 0.8rem;
-  color: #4a557f;
+.si-name-err { top: 39%; }
+.si-email-err { top: 64%; white-space: nowrap; }
+.si-btn {
+  position: absolute;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
+.si-submit { left: 28%; top: 67.8%; width: 47.7%; height: 7.2%; }
+.si-guest { left: 38%; top: 78.4%; width: 27.5%; height: 6.6%; }
+.si-btn:hover { transform: scale(1.05); box-shadow: 0 0 0 3px rgba(240, 207, 111, 0.9); }
+.si-btn:active { transform: scale(0.98); }
+.si-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .btn.ghost {
   background: transparent;
 }
@@ -201,8 +202,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pill,
-  .book {
-    animation: none !important;
-  }
+  .pill, .book { animation: none !important; }
 }
