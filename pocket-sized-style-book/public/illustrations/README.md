@@ -3,6 +3,8 @@
 Drop your artwork here. Until a file exists the app shows a coloured placeholder, so you can add them one at a time.
 
 - `character.png`: the character shown in the middle of every quiz screen (transparent PNG, portrait, about 600 x 1000 px)
+- `character_no_hair.png`: the character with no hair, shown on the hairstyle question before a style is tried
+- `character_hair_<CODE>.png`: the whole character wearing each hairstyle (same size and pose as `character.png`). It replaces the character when that hairstyle is tried on. Until a file exists, the bald character shows with a label.
 - `<slot>/<CODE>.png`: one image per option. `<CODE>` is the aesthetic: `QL`, `SW`, `AL`, `BE`, `Y2K`, `WH`
 
 | Folder (slot) | Question | Shown on | Suggested artwork |
@@ -16,7 +18,7 @@ Drop your artwork here. Until a file exists the app shows a coloured placeholder
 | `accessory` | Choose an accessory | character | the accessory, sized for the neck or chest area |
 | `jacket` | Pick a jacket | placard | the jacket |
 | `print` | Choose a print | placard | a pattern swatch |
-| `hair` | Pick a hairstyle vibe | character | the hair, sized for the head area |
+| (`character_hair_<CODE>.png`) | Pick a hairstyle vibe | whole character swaps | full character with that hairstyle |
 | `comfort` | Pick a comfort item | character | the item, sized for the hand area |
 
 The colour palette question needs no files: it draws three circles per option from `src/data/stage.js`.

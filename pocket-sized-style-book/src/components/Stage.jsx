@@ -1,5 +1,5 @@
 import SlotImage from "./SlotImage.jsx";
-import { CHARACTER_SRC, SWATCHES, artSrc } from "../data/stage.js";
+import { CHARACTER_SRC, CHARACTER_BASE_SRC, SWATCHES, artSrc, swapSrc } from "../data/stage.js";
 
 // Placeholder shown until public/illustrations/character.png exists.
 function CharacterPlaceholder() {
@@ -20,7 +20,7 @@ function ArtFallback({ label, code, slot }) {
   return (
     <div className="art-ph" style={{ background: bg }}>
       <span className="art-ph-label">{label}</span>
-      {/* {slot && <span className="art-ph-file">{`${slot}/${code}.png`}</span>} */}
+      {slot && <span className="art-ph-file">{`${slot}/${code}.png`}</span>}
     </div>
   );
 }
@@ -35,13 +35,36 @@ function Swatches({ code }) {
   );
 }
 
+// For "swap" questions the whole character picture changes with the option (e.g. each hairstyle).
+// If that option's picture is not drawn yet, the base character stays and a label shows the pick.
+function SwapCharacter({ stage, chosen }) {
+  const base = (
+    <SlotImage src={CHARACTER_BASE_SRC} alt="" className="character-img" fallback={<CharacterPlaceholder />} />
+  );
+  if (!chosen) return base;
+  const [label, code] = chosen;
+  return (
+    <SlotImage
+      key={code}
+      src={swapSrc(stage, code)}
+      alt=""
+      className="character-img swap-in"
+      fallback={
+        <>
+          {base}
+          <span key={code} className="swap-badge">{label}</span>
+        </>
+      }
+    />
+  );
+}
+
 // The middle of the quiz screen: the character, plus either a placard over it or an item drawn on it.
 export default function Stage({ stage, chosen }) {
   const [label, code] = chosen || [];
   const src = chosen ? artSrc(stage.slot, code) : null;
-  const art =
-    chosen &&
-    (src ? (
+  const art = chosen && (
+    src ? (
       <SlotImage
         key={src}
         src={src}
@@ -51,17 +74,22 @@ export default function Stage({ stage, chosen }) {
       />
     ) : (
       <ArtFallback label={label} code={code} slot={stage.slot} />
-    ));
+    )
+  );
 
   return (
     <div className="stage" aria-hidden="true">
       <div className="character">
-        <SlotImage
-          src={CHARACTER_SRC}
-          alt=""
-          className="character-img"
-          fallback={<CharacterPlaceholder />}
-        />
+        {stage.mode === "swap" ? (
+          <SwapCharacter stage={stage} chosen={chosen} />
+        ) : (
+          <SlotImage
+            src={CHARACTER_SRC}
+            alt=""
+            className="character-img"
+            fallback={<CharacterPlaceholder />}
+          />
+        )}
       </div>
 
       {stage.mode === "character" && chosen && (
