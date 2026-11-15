@@ -1,11 +1,26 @@
-import { CategoryIcon } from "./icons/Icon.jsx";
-
-export default function OptionCard({ label, categoryCode, onSelect }) {
+export default function OptionCard({
+  label,
+  selected,
+  onPick,
+  side,
+  order,
+  swatches,
+}) {
   return (
-    <button className="option" onClick={onSelect}>
-      <span className="option-icon">
-        <CategoryIcon code={categoryCode} size={20} />
-      </span>
+    <button
+      type="button"
+      className={`opt-tag ${side}${selected ? " selected" : ""}`}
+      aria-pressed={selected}
+      onClick={onPick}
+      style={{ "--order": order }}
+    >
+      {swatches && (
+        <span className="opt-swatches" aria-hidden="true">
+          {swatches.map((c) => (
+            <span key={c} className="dot" style={{ background: c }} />
+          ))}
+        </span>
+      )}
       <span className="opt-text">{label}</span>
     </button>
   );

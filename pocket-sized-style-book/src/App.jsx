@@ -166,7 +166,9 @@ export default function App() {
       <main>
         {screen === SCREENS.QUIZ && (
           <QuizScreen
+            key={`${inTiebreak}-${index}`}
             question={activeQuestions[index]}
+            isTiebreak={inTiebreak}
             index={index}
             total={activeQuestions.length}
             onAnswer={handleAnswer}

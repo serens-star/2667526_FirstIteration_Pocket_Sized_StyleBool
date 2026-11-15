@@ -15,22 +15,21 @@ export default function LandingScreen({
       <h1 className="sr-only">Pocket-Sized Style Book</h1>
       <div className="book">
         <img
-          src="/images/style-book.png"
-          alt="Pocket-Sized Style Book: an open style book of outfit collages"
+          src="/images/landing-art.jpg"
+          alt="Illustration: a profile card and outfit tiles beside a pair of jeans with a style book in the back pocket"
           className="book-img"
           draggable="false"
         />
-        {}
         <button
-          className="hotspot hs-explore"
-          onClick={onExplore}
-          aria-label="Explore App"
-        />
-        <button
-          className="hotspot hs-signin"
+          className="pill pill-signin"
           onClick={() => (user ? onSignIn(user) : setShowModal(true))}
           aria-label={user ? `Continue as ${user.name}` : "Sign in"}
-        />
+        >
+          {user ? "Continue" : "Sign In"}
+        </button>
+        <button className="pill pill-explore" onClick={onExplore}>
+          Explore App
+        </button>
       </div>
       {user && (
         <p className="welcome">

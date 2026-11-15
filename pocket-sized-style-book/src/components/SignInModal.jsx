@@ -69,8 +69,7 @@ export default function SignInModal({ onSubmit, onGuest, onClose }) {
           </p>
         )}
         <p className="modal-note">
-          Beta: your details are stored only on this device (no password or
-          server yet).
+          Details are stored only on this device (no password needed).
         </p>
         <div className="actions-row">
           <button type="submit" className="btn">
