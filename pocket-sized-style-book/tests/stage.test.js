@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { STAGE, stageFor, artSrc, swapSrc, SWATCHES } from "../src/data/stage.js";
+import { STAGE, stageFor, artSrc, swapSrc, baseSrc, SWATCHES } from "../src/data/stage.js";
 import { QUESTIONS, tiebreakerQuestions, suddenDeathQuestion } from "../src/data/questions.js";
 import { CATEGORY_CODES } from "../src/data/categories.js";
 import { splitOptions } from "../src/utils/quizLayout.js";
@@ -27,7 +27,14 @@ describe("illustrated quiz layout", () => {
     const hair = STAGE.find((s) => s.slot === "hair");
     expect(hair.mode).toBe("swap");
     expect(swapSrc(hair, "SW")).toBe("/illustrations/character_hair_SW.png");
-    expect(swapSrc(STAGE[0], "SW")).toBeNull();
+    expect(swapSrc(STAGE[1], "SW")).toBeNull();
+  });
+  it("outfit also swaps the whole character and starts from the dressed base", () => {
+    const outfit = STAGE.find((s) => s.slot === "outfit");
+    expect(outfit.mode).toBe("swap");
+    expect(swapSrc(outfit, "QL")).toBe("/illustrations/character_outfit_QL.png");
+    expect(baseSrc(outfit)).toBe("/illustrations/character.png");
+    expect(baseSrc(STAGE.find((s) => s.slot === "hair"))).toBe("/illustrations/character_no_hair.png");
   });
   it("has three swatches for every aesthetic", () => {
     CATEGORY_CODES.forEach((c) => expect(SWATCHES[c]).toHaveLength(3));

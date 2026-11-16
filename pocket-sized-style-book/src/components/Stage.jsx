@@ -1,7 +1,13 @@
 import SlotImage from "./SlotImage.jsx";
-import { CHARACTER_SRC, CHARACTER_BASE_SRC, SWATCHES, artSrc, swapSrc } from "../data/stage.js";
+import {
+  CHARACTER_SRC,
+  baseSrc,
+  SWATCHES,
+  artSrc,
+  swapSrc,
+} from "../data/stage.js";
 
-// Placeholder shown until public/illustrations/character.png exists.
+
 function CharacterPlaceholder() {
   return (
     <div className="character-ph">
@@ -14,13 +20,12 @@ function CharacterPlaceholder() {
   );
 }
 
-// Coloured stand-in for an option image that has not been drawn yet.
+
 function ArtFallback({ label, code, slot }) {
   const bg = (SWATCHES[code] || ["#c3d3e8"])[0];
   return (
     <div className="art-ph" style={{ background: bg }}>
       <span className="art-ph-label">{label}</span>
-      {slot && <span className="art-ph-file">{`${slot}/${code}.png`}</span>}
     </div>
   );
 }
@@ -35,11 +40,15 @@ function Swatches({ code }) {
   );
 }
 
-// For "swap" questions the whole character picture changes with the option (e.g. each hairstyle).
-// If that option's picture is not drawn yet, the base character stays and a label shows the pick.
+
 function SwapCharacter({ stage, chosen }) {
   const base = (
-    <SlotImage src={CHARACTER_BASE_SRC} alt="" className="character-img" fallback={<CharacterPlaceholder />} />
+    <SlotImage
+      src={baseSrc(stage)}
+      alt=""
+      className="character-img"
+      fallback={<CharacterPlaceholder />}
+    />
   );
   if (!chosen) return base;
   const [label, code] = chosen;
@@ -52,19 +61,22 @@ function SwapCharacter({ stage, chosen }) {
       fallback={
         <>
           {base}
-          <span key={code} className="swap-badge">{label}</span>
+          <span key={code} className="swap-badge">
+            {label}
+          </span>
         </>
       }
     />
   );
 }
 
-// The middle of the quiz screen: the character, plus either a placard over it or an item drawn on it.
+
 export default function Stage({ stage, chosen }) {
   const [label, code] = chosen || [];
   const src = chosen ? artSrc(stage.slot, code) : null;
-  const art = chosen && (
-    src ? (
+  const art =
+    chosen &&
+    (src ? (
       <SlotImage
         key={src}
         src={src}
@@ -74,8 +86,7 @@ export default function Stage({ stage, chosen }) {
       />
     ) : (
       <ArtFallback label={label} code={code} slot={stage.slot} />
-    )
-  );
+    ));
 
   return (
     <div className="stage" aria-hidden="true">

@@ -100,14 +100,12 @@ export const QUESTIONS = [
 ];
 
 
-
 function joinNames(codes) {
   const names = codes.map((c) => CATEGORIES[c].name);
   return names.length < 2
     ? names.join("")
     : `${names.slice(0, -1).join(", ")} or ${names[names.length - 1]}`;
 }
-
 
 export function tiebreakerQuestions(...codes) {
   return [

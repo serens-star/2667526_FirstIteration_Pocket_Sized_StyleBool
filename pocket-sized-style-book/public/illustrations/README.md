@@ -5,11 +5,12 @@ Drop your artwork here. Until a file exists the app shows a coloured placeholder
 - `character.png`: the character shown in the middle of every quiz screen (transparent PNG, portrait, about 600 x 1000 px)
 - `character_no_hair.png`: the character with no hair, shown on the hairstyle question before a style is tried
 - `character_hair_<CODE>.png`: the whole character wearing each hairstyle (same size and pose as `character.png`). It replaces the character when that hairstyle is tried on. Until a file exists, the bald character shows with a label.
+- `character_outfit_<CODE>.png`: the whole character wearing each Saturday outfit (same size and pose as `character.png`). Drawn so far: QL, SW, AL. The others show the plain character with a label until they exist.
 - `<slot>/<CODE>.png`: one image per option. `<CODE>` is the aesthetic: `QL`, `SW`, `AL`, `BE`, `Y2K`, `WH`
 
 | Folder (slot) | Question | Shown on | Suggested artwork |
 | --- | --- | --- | --- |
-| `outfit` | Pick your ideal Saturday fit | character | full outfit, same pose as the character |
+| (`character_outfit_<CODE>.png`) | Pick your ideal Saturday fit | whole character swaps | full character wearing that outfit |
 | `bag` | Pick a bag | placard | the bag |
 | `weekend` | Pick your dream weekend plan | placard | a small scene |
 | `shoe` | Choose a shoe | placard | the shoe |
