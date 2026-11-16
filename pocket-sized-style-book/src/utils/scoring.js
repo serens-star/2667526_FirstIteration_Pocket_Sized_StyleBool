@@ -11,6 +11,6 @@ export function findTopAndTie(scores) {
   return {
     topCode: sorted[0][0],
     isTie: tiedTop.length >= 2,
-    tiedCodes: tiedTop.length >= 2 ? [tiedTop[0][0], tiedTop[1][0]] : null
+    tiedCodes: tiedTop.length >= 2 ? tiedTop.map(([code]) => code) : null 
   };
 }

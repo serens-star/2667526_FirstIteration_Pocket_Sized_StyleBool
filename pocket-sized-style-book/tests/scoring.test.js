@@ -17,6 +17,10 @@ describe("scoring", () => {
     expect(r.isTie).toBe(true);
     expect(r.tiedCodes.sort()).toEqual(["AL", "BE"]);
   });
+  it("returns every category in a three-way tie", () => {
+    const r = findTopAndTie({ ...emptyScores(), AL: 3, BE: 3, QL: 3 });
+    expect(r.tiedCodes.sort()).toEqual(["AL", "BE", "QL"]);
+  });
   it("does not flag a tie for lower places", () => {
     expect(
       findTopAndTie({ ...emptyScores(), Y2K: 6, QL: 2, SW: 2 }).isTie
