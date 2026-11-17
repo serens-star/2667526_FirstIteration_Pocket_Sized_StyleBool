@@ -1,53 +1,61 @@
-// Layout and artwork settings for the illustrated quiz.
-// One entry per quiz question, in the same order as QUESTIONS in questions.js.
-//
-//   mode "placard"   : the chosen option is shown on the horizontal placard over the character
-//   mode "character" : the chosen option is drawn on the character, inside the box given by `anchor`
-//                      (top, left, width, height as a percentage of the character panel)
-//   mode "swap"      : the whole character picture is replaced by a pre-drawn version per option,
-//                      /illustrations/character_<slot>_<CODE>.png. `base` is shown before anything is tried.
-//   slot             : folder name for that question's artwork, /illustrations/<slot>/<CODE>.png
+
 export const STAGE = [
-  { slot: "outfit", mode: "swap", base: "character" }, // Saturday fit: character_outfit_<CODE>.png
-  { slot: "palette", mode: "placard" }, // colour palette: drawn from SWATCHES, no image files needed
+  { slot: "outfit", mode: "swap" }, 
+  { slot: "hair", mode: "swap" },
+  { slot: "palette", mode: "placard" },
   { slot: "bag", mode: "placard" },
   { slot: "weekend", mode: "placard" },
   { slot: "shoe", mode: "placard" },
   { slot: "texture", mode: "placard" },
   { slot: "movie", mode: "placard" },
-  {
-    slot: "accessory",
-    mode: "character",
-    anchor: { top: 20, left: 28, width: 44, height: 14 },
-  },
+  { slot: "accessory", mode: "placard" },
   { slot: "jacket", mode: "placard" },
   { slot: "print", mode: "placard" },
-  { slot: "hair", mode: "swap", base: "character_no_hair" }, // character_hair_<CODE>.png, starting bald
-  {
-    slot: "comfort",
-    mode: "character",
-    anchor: { top: 56, left: 58, width: 36, height: 22 },
-  },
+  { slot: "comfort", mode: "placard" },
 ];
 
 
 const TIEBREAK = { slot: null, mode: "placard" };
 
-export const stageFor = (index, isTiebreak = false) =>
-  isTiebreak ? TIEBREAK : STAGE[index] || TIEBREAK;
+export const stageFor = (index, isTiebreak = false) => (isTiebreak ? TIEBREAK : STAGE[index] || TIEBREAK);
 
 export const CHARACTER_SRC = "/illustrations/character.png";
-export const baseSrc = (stage) =>
-  `/illustrations/${stage.base || "character"}.png`; 
-
-export const swapSrc = (stage, code) =>
-  stage.mode === "swap"
-    ? `/illustrations/character_${stage.slot}_${code}.png`
-    : null;
+const BARE_NO_HAIR = "/illustrations/character_no_hair.png";
 
 
-export const artSrc = (slot, code) =>
-  slot && slot !== "palette" ? `/illustrations/${slot}/${code}.png` : null;
+export const EMPTY_LOOK = { outfit: null, hair: null };
+export const isLookSlot = (slot) => slot === "outfit" || slot === "hair";
+export const setLook = (look, slot, code) => (isLookSlot(slot) ? { ...look, [slot]: code } : look);
+export const clearLook = (look, slot) => (isLookSlot(slot) ? { ...look, [slot]: null } : look);
+
+const outfitSrc = (o) => `/illustrations/character_outfit_${o}_hair_NONE.png`; 
+const oldOutfitSrc = (o) => `/illustrations/character_outfit_${o}.png`; 
+const hairOnlySrc = (h) => `/illustrations/character_hair_${h}.png`;
+const comboSrc = (o, h) => `/illustrations/character_outfit_${o}_hair_${h}.png`;
+
+
+export function characterCandidates(stage, look, chosenCode = null) {
+  const outfit = stage.slot === "outfit" && chosenCode ? chosenCode : look.outfit;
+  const hair = stage.slot === "hair" && chosenCode ? chosenCode : look.hair;
+  const previewing = stage.mode === "swap" && !!chosenCode;
+  const list = [];
+  if (hair) {
+    if (outfit) list.push({ src: comboSrc(outfit, hair), exact: true });
+    if (outfit) {
+      const standIn = !previewing || stage.slot !== "hair";
+      list.push({ src: outfitSrc(outfit), exact: standIn }, { src: oldOutfitSrc(outfit), exact: standIn });
+    }
+    list.push({ src: hairOnlySrc(hair), exact: true });
+  } else if (outfit) {
+    list.push({ src: outfitSrc(outfit), exact: true }, { src: oldOutfitSrc(outfit), exact: true });
+  }
+  list.push({ src: stage.slot === "hair" ? BARE_NO_HAIR : CHARACTER_SRC, exact: !previewing });
+  list.push({ src: CHARACTER_SRC, exact: !previewing });
+  return list;
+}
+
+
+export const artSrc = (slot, code) => (slot && slot !== "palette" ? `/illustrations/${slot}/${code}.png` : null);
 
 
 export const SWATCHES = {

@@ -1,11 +1,6 @@
+import { useState } from "react";
 import SlotImage from "./SlotImage.jsx";
-import {
-  CHARACTER_SRC,
-  baseSrc,
-  SWATCHES,
-  artSrc,
-  swapSrc,
-} from "../data/stage.js";
+import { SWATCHES, artSrc, characterCandidates } from "../data/stage.js";
 
 
 function CharacterPlaceholder() {
@@ -41,42 +36,34 @@ function Swatches({ code }) {
 }
 
 
-function SwapCharacter({ stage, chosen }) {
-  const base = (
-    <SlotImage
-      src={baseSrc(stage)}
-      alt=""
-      className="character-img"
-      fallback={<CharacterPlaceholder />}
-    />
-  );
-  if (!chosen) return base;
-  const [label, code] = chosen;
+function CharacterPic({ stage, look, chosen }) {
+  const [tried, setTried] = useState(0);
+  const list = characterCandidates(stage, look, chosen ? chosen[1] : null);
+  const current = list[tried];
+  if (!current) return <CharacterPlaceholder />;
   return (
-    <SlotImage
-      key={code}
-      src={swapSrc(stage, code)}
-      alt=""
-      className="character-img swap-in"
-      fallback={
-        <>
-          {base}
-          <span key={code} className="swap-badge">
-            {label}
-          </span>
-        </>
-      }
-    />
+    <>
+      <img
+        key={current.src}
+        src={current.src}
+        alt=""
+        className="character-img swap-in"
+        draggable="false"
+        onError={() => setTried((n) => n + 1)}
+      />
+      {chosen && stage.mode === "swap" && !current.exact && (
+        <span key={chosen[1]} className="swap-badge">{chosen[0]}</span>
+      )}
+    </>
   );
 }
 
 
-export default function Stage({ stage, chosen }) {
+export default function Stage({ stage, chosen, look }) {
   const [label, code] = chosen || [];
   const src = chosen ? artSrc(stage.slot, code) : null;
-  const art =
-    chosen &&
-    (src ? (
+  const art = chosen && (
+    src ? (
       <SlotImage
         key={src}
         src={src}
@@ -86,37 +73,14 @@ export default function Stage({ stage, chosen }) {
       />
     ) : (
       <ArtFallback label={label} code={code} slot={stage.slot} />
-    ));
+    )
+  );
 
   return (
     <div className="stage" aria-hidden="true">
       <div className="character">
-        {stage.mode === "swap" ? (
-          <SwapCharacter stage={stage} chosen={chosen} />
-        ) : (
-          <SlotImage
-            src={CHARACTER_SRC}
-            alt=""
-            className="character-img"
-            fallback={<CharacterPlaceholder />}
-          />
-        )}
+        <CharacterPic key={stage.mode === "swap" ? `${stage.slot}-${chosen ? chosen[1] : "none"}` : stage.slot} stage={stage} look={look} chosen={chosen} />
       </div>
-
-      {stage.mode === "character" && chosen && (
-        <div
-          key={`${stage.slot}-${code}`}
-          className="tryon"
-          style={{
-            top: `${stage.anchor.top}%`,
-            left: `${stage.anchor.left}%`,
-            width: `${stage.anchor.width}%`,
-            height: `${stage.anchor.height}%`,
-          }}
-        >
-          {art}
-        </div>
-      )}
 
       {stage.mode === "placard" && (
         <div className={`placard${chosen ? " has-pick" : ""}`}>

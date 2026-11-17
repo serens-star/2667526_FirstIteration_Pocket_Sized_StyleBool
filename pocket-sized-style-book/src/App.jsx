@@ -9,6 +9,7 @@ import ResultsScreen from "./components/ResultsScreen.jsx";
 import WishlistScreen from "./components/WishlistScreen.jsx";
 import { loadWishlist, toggleWishlist, clearWishlist } from "./utils/wishlist.js";
 import { QUESTIONS } from "./data/questions.js";
+import { STAGE, EMPTY_LOOK, setLook, clearLook } from "./data/stage.js";
 import { nextTieRound } from "./utils/tiebreak.js";
 import { emptyScores, findTopAndTie } from "./utils/scoring.js";
 import { generateStyleProfile, categoryCodeFromName } from "./utils/llm.js";
@@ -48,6 +49,8 @@ export default function App() {
   const [answers, setAnswers] = useState([]);
   const [chosenLabels, setChosenLabels] = useState([]);
   const [inTiebreak, setInTiebreak] = useState(false);
+  
+  const [look, setLook_] = useState(EMPTY_LOOK);
   const [profile, setProfile] = useState(null);
   const [usedFallback, setUsedFallback] = useState(false);
   const [resultCategoryCode, setResultCategoryCode] = useState(null);
@@ -61,6 +64,7 @@ export default function App() {
     setChosenLabels([]);
     setAnswers([]);
     setInTiebreak(false);
+    setLook_(EMPTY_LOOK);
     setScreen(SCREENS.QUIZ);
   }
 
@@ -73,6 +77,7 @@ export default function App() {
     }));
     setAnswers((a) => a.slice(0, -1));
     setChosenLabels((l) => l.slice(0, -1));
+    if (!inTiebreak) setLook_((lk) => clearLook(lk, STAGE[index - 1]?.slot));
     setIndex(index - 1);
   }
 
@@ -82,6 +87,7 @@ export default function App() {
       [categoryCode]: (scores[categoryCode] || 0) + 1,
     };
     const nextLabels = [...chosenLabels, label];
+    if (!inTiebreak) setLook_((lk) => setLook(lk, STAGE[index]?.slot, categoryCode));
     setScores(nextScores);
     setAnswers((a) => [...a, { label, code: categoryCode }]);
     setChosenLabels(nextLabels);
@@ -135,7 +141,7 @@ export default function App() {
   }
 
   function closeWishlist() {
-    // Go back to where the user came from; never back into a quiz or loading state that no longer exists.
+    
     setScreen(wishFrom === SCREENS.RESULTS && profile ? SCREENS.RESULTS : SCREENS.LANDING);
   }
 
@@ -169,6 +175,7 @@ export default function App() {
             key={`${inTiebreak}-${index}`}
             question={activeQuestions[index]}
             isTiebreak={inTiebreak}
+            look={look}
             index={index}
             total={activeQuestions.length}
             onAnswer={handleAnswer}

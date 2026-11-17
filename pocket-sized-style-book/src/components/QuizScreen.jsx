@@ -12,6 +12,7 @@ export default function QuizScreen({
   index,
   total,
   isTiebreak = false,
+  look,
   onAnswer,
   onBack,
 }) {
@@ -42,7 +43,7 @@ export default function QuizScreen({
 
       <div className="quiz-stage">
         <div className="opt-col">{left.map((o, i) => card(o, "left", i))}</div>
-        <Stage stage={stage} chosen={chosen} />
+        <Stage stage={stage} chosen={chosen} look={look} />
         <div className="opt-col">
           {right.map((o, i) => card(o, "right", i + left.length))}
         </div>

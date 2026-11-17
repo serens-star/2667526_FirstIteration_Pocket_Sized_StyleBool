@@ -1,6 +1,6 @@
 # Pocket-Sized Style Book
 
-A web app that turns a 12-question quiz into a named fashion aesthetic, an AI-written style profile, style icons and six affordable South African shopping picks (in rand). Players "try on" each option on an illustrated character before they commit to an answer.
+A web app that turns a 12-question quiz into a named fashion aesthetic, an AI-written style profile, style icons and six affordable South African shopping picks (in rand). Players "try on" each option on an illustrated character before they commit to an answer. The outfit and hairstyle chosen in the first two questions stay on the character to the end of the quiz.
 
 Built by Seren Mafunda (student 2667526) as an individual project with React 18 and Vite.
 
@@ -10,7 +10,7 @@ Built by Seren Mafunda (student 2667526) as an individual project with React 18 
 
 1. **Splash and landing.** A splash screen leads to an illustrated landing page with two buttons: *Sign In* and *Explore App*.
 2. **Sign in or continue as guest.** A local sign-in (name and email, validated). Details are stored only on the device, with no password and no server.
-3. **Illustrated quiz.** 12 questions, three options on each side of a character. Clicking an option previews it, either on a placard or by swapping the character's outfit or hair. *Next* records the answer; *Back* undoes it.
+3. **Illustrated quiz.** 12 questions, three options on each side of a character. Clicking an option previews it: the outfit (question 1) and hairstyle (question 2) change the character and stay on it, and every other option appears on a placard. *Next* records the answer; *Back* undoes it.
 4. **Tiebreaker.** If the top scores are level, a short extra round asks only about the tied aesthetics. This works for ties of any size, from two to all six. A sudden-death question follows if needed, so a tie always ends.
 5. **Results.** A named aesthetic (one of six), a style profile, three tips, style icons and shopping picks.
 6. **Explainable AI.** A *Why this result* panel shows a calculated confidence level (High, Medium or Low) and the score for every aesthetic. *Yes / Not quite* feedback is saved on the device.
@@ -57,7 +57,7 @@ The `VITE_GEMINI_API_KEY` and `VITE_ANTHROPIC_API_KEY` options in `.env.example`
 | `npm run dev` | Start the development server (includes the `/api/generate` proxy) |
 | `npm run build` | Build for production into `dist/` |
 | `npm run preview` | Serve the production build locally |
-| `npm test` | Run the automated tests (87 tests, pure logic) |
+| `npm test` | Run the automated tests (91 tests, pure logic) |
 | `npm run check:llm` | Make one real AI call and print the reply, to prove the live path works |
 
 ## Deploy (Vercel)
@@ -70,10 +70,10 @@ The `VITE_GEMINI_API_KEY` and `VITE_ANTHROPIC_API_KEY` options in `.env.example`
 
 Artwork lives in `public/illustrations/` and is picked up automatically; a missing file shows a neutral placeholder. See `public/illustrations/README.md` for file names and sizes. In short:
 
-- `character.png`, the character on every quiz screen.
-- `character_outfit_<CODE>.png`, the whole character in each Saturday outfit (drawn: QL, SW, AL).
-- `character_hair_<CODE>.png` and `character_no_hair.png`, the hairstyle question (all six drawn).
-- `<slot>/<CODE>.png`, a picture per option for the placard and accessory/comfort questions.
+- `character.png`, the plain character.
+- `character_outfit_<OUTFIT>_hair_NONE.png`, each Saturday outfit on the bald character (all six drawn). The outfit chosen in question 1 stays on the character for the rest of the quiz.
+- `character_outfit_<OUTFIT>_hair_<HAIR>.png`, each hairstyle on each outfit (question 2). Streetwear and Alternative hair are drawn for every outfit; `character_hair_<CODE>.png` is the fallback.
+- `<slot>/<CODE>.png`, a 3:2 picture per option for the placard questions.
 
 Which question uses which layout is set in `src/data/stage.js`.
 

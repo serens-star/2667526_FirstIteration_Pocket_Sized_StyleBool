@@ -131,7 +131,7 @@
 .art-ph-file { font-size: 0.55rem; opacity: 0.85; font-weight: 600; }
 
 .placard {
-  left: 6%; right: 6%; top: 40%; height: 22%;
+  left: 6%; right: 6%; top: 38%; aspect-ratio: 3 / 2; 
   background: #fffdf8;
   border: 3px solid var(--navy);
   border-radius: 12px;
@@ -153,7 +153,7 @@
 }
 @keyframes swap-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
 
-/* actions */
+
 .quiz-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
 .next-btn { display: inline-flex; align-items: center; gap: 6px; }
 .next-btn:not(:disabled) { animation: nudge 1.6s ease-in-out infinite; }
